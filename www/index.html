@@ -1,71 +1,95 @@
 <!DOCTYPE html>
 <html>
-<meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*" />
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src * gap:; 
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src * gap:; 
                  style-src 'self' 'unsafe-inline' 'unsafe-eval'; 
-                 script-src 'self' 'unsafe-inline' 'unsafe-eval';">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="color-scheme" content="light dark">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
+                 script-src 'self' 'unsafe-inline' 'unsafe-eval';"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <style>
-        body {
-            background-color: #a3a3a3;
-        }
+      body {
+        background-color: #a3a3a3;
+      }
 
-        .center {
-            text-align: center;
-            align-content: center;
-            align-self: center;
-            align-items: center;
-        }
+      .center {
+        text-align: center;
+        align-content: center;
+        align-self: center;
+        align-items: center;
+      }
 
-        .jumbotron {
-            padding-top: 32px;
-            padding-bottom: 32px;
-        }
+      .jumbotron {
+        padding-top: 32px;
+        padding-bottom: 32px;
+      }
 
-        .btn {
-            margin-right: 8px;
-            white-space: normal;
-        }
+      .btn {
+        margin-right: 8px;
+        white-space: normal;
+      }
 
-        .btn-primary {
-            margin-bottom: 10px;
-        }
+      .btn-primary {
+        margin-bottom: 10px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav class="navbar navbar-light bg-light">
-        <div class="form-inline mx-auto">
-            <a class="navbar-brand" href="#">Manga search</a>
-            <input class="form-control mr-sm-2" type="search" id="search-place" placeholder="Search"
-                aria-label="Search">
-            <a id="back-button" hidden="true" class="pagination page-item page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-            <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit">Search</button>
-            <button class="btn btn-outline-info" onclick="alert(help)">Help</button>
-        </div>
+      <div class="form-inline mx-auto">
+        <a class="navbar-brand" href="#">Manga search</a>
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          id="search-place"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <a
+          id="back-button"
+          hidden="true"
+          class="pagination page-item page-link"
+          href="#"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+        <button
+          class="btn btn-outline-success my-2 my-sm-0"
+          id="search-button"
+          type="submit"
+        >
+          Search
+        </button>
+        <button class="btn btn-outline-info" onclick="alert(help)">Help</button>
+        <button class="btn btn-outline-info" id="lk-button">LK</button>
+      </div>
     </nav>
 
     <div class="container">
-        <div class="jumbotron center">
-            <div id="search-result">
-                <h1>Search russian manga without ads and slow performance</h1>
-            </div>
+      <div class="jumbotron center">
+        <div id="search-result">
+          <h1>Search russian manga without ads and slow performance</h1>
         </div>
+      </div>
     </div>
 
     <div hidden="true" id="manga-id"></div>
 
     <script src="cordova.js"></script>
     <script src="js/index.js"></script>
-</body>
-
+  </body>
 </html>
+

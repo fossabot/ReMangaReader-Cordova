@@ -3,11 +3,11 @@ https = null;
 
 function onDeviceReady() {
   // Cordova is now initialized. Have fun!
-  
+
   // Android params
-  if (cordova.platformId == 'android') {
+  if (cordova.platformId == "android") {
     StatusBar.hide();
-    window.screen.orientation.lock('portrait');
+    window.screen.orientation.lock("portrait");
   }
 
   console.log("Running cordova-" + cordova.platformId + "@" + cordova.version);
@@ -25,6 +25,7 @@ function onDeviceReady() {
     .addEventListener("click", () => {
       document.getElementById("search-result").innerHTML =
         "<h1>Search russian manga without ads and slow performance</h1>";
+      document.getElementById("back-button").hidden = true;
     });
   document.addEventListener("keydown", () => {
     if (event.code == "ArrowLeft") {
@@ -41,10 +42,13 @@ function onDeviceReady() {
 
 function search(text) {
   test = https.get(
-    "https://thingproxy.freeboard.io/fetch/https://api.remanga.org/api/search/?query=" + text + "&count=10",
+    "https://thingproxy.freeboard.io/fetch/https://api.remanga.org/api/search/?query=" +
+      text +
+      "&count=10",
     {},
     {},
     (resp) => {
+      console.log(JSON.parse(resp.data).content);
       wait_data = JSON.parse(resp.data).content;
       add("manga", wait_data);
     },
@@ -72,14 +76,39 @@ function add(type, ins) {
     var child = document.createElement("input");
     child.type = "submit";
     if (type == "manga") {
-      document.getElementById("back-button").hidden = true;
-      child.value = ins[i].rus_name;
-      child.className = "btn btn-primary";
-      child.dataset.id = ins[i].dir;
-      child.onerror = "";
-      child.addEventListener("click", () => {
+      child = document.createElement("div");
+      child.className = "card";
+
+      var img = document.createElement("img");
+      img.className = "card-img-top";
+      img.src = "https://api.remanga.org/" + ins[i].img.high;
+
+      child.appendChild(img);
+      var cardBody = document.createElement("div");
+      cardBody.className = "card-body";
+
+      var cardTitle = document.createElement("h5");
+      cardTitle.className = "card-title";
+      cardTitle.innerText = ins[i].rus_name;
+
+      var cardText = document.createElement("p");
+      cardText.className = "card-text";
+      cardText.innerText = "Глав: " + ins[i].count_chapters;
+
+      var a = document.createElement("a");
+      a.className = "btn btn-primary";
+      a.dataset.id = ins[i].dir;
+      a.innerText = "Читать";
+      a.addEventListener("click", () => {
         get_tomes(event.target.dataset.id);
       });
+
+      cardBody.appendChild(cardTitle);
+      cardBody.appendChild(cardText);
+      cardBody.appendChild(a);
+      child.appendChild(cardBody);
+
+      document.getElementById("back-button").hidden = true;
     } else if (type == "tome") {
       document.getElementById("back-button").hidden = true;
       child.value = "Глава " + ins[i].chapter + " " + ins[i].name;
