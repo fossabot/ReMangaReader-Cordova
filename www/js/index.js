@@ -20,13 +20,9 @@ function onDeviceReady() {
   document.getElementById("back-button").addEventListener("click", () => {
     next_prev_page("prev", "back-button");
   });
-  document
-    .getElementsByClassName("navbar-brand")[0]
-    .addEventListener("click", () => {
-      document.getElementById("search-result").innerHTML =
-        "<h1>Search russian manga without ads and slow performance</h1>";
-      document.getElementById("back-button").hidden = true;
-    });
+  document.getElementById("next-button").addEventListener("click", () => {
+    next_prev_page("next", "next-button");
+  });
   document.addEventListener("keydown", () => {
     if (event.code == "ArrowLeft") {
       next_prev_page("prev", wait_data);
@@ -34,10 +30,15 @@ function onDeviceReady() {
       next_prev_page("next", wait_data);
     }
   });
+  document.getElementById("lk-button").addEventListener("click", lk_button);
   https = cordova.plugin.http;
   cordova.plugin.http.setFollowRedirect(true);
   cordova.plugin.http.setDataSerializer("json");
   cordova.plugin.http.setRequestTimeout(5.0);
+}
+
+function lk_button() {
+  var searchResult = document.getElementById("search-result");
 }
 
 function search(text) {
@@ -101,6 +102,7 @@ function add(type, ins) {
       a.innerText = "Читать";
       a.addEventListener("click", () => {
         get_tomes(event.target.dataset.id);
+        window.location.href = "#search-result";
       });
 
       cardBody.appendChild(cardTitle);
@@ -108,9 +110,9 @@ function add(type, ins) {
       cardBody.appendChild(a);
       child.appendChild(cardBody);
 
-      document.getElementById("back-button").hidden = true;
+      document.getElementById("next_prev_buttons").hidden = true;
     } else if (type == "tome") {
-      document.getElementById("back-button").hidden = true;
+      document.getElementById("next_prev_buttons").hidden = true;
       child.value = "Глава " + ins[i].chapter + " " + ins[i].name;
       child.className = "btn btn-primary";
       child.dataset.id = ins[i].id;
@@ -121,7 +123,7 @@ function add(type, ins) {
         get_chapters(event.target.dataset.id);
       });
     } else if (type == "chapters") {
-      document.getElementById("back-button").hidden = false;
+      document.getElementById("next_prev_buttons").hidden = false;
       child = document.createElement("img");
       child.src = wait_data[0].link;
       child.className = "btn btn-primary";
@@ -147,7 +149,7 @@ function next_prev_page(type, ins) {
     return;
   }
   img = document.getElementsByClassName("card-img-top")[0];
-  if (ins == "back-button") {
+  if (ins == "back-button" || ins == "next-button") {
     ins = JSON.parse(img.dataset.json);
   }
   try {

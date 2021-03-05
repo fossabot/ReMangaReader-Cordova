@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <style>
       body {
-        background-color: #a3a3a3;
+        background-color: #121212;
       }
 
       .center {
@@ -43,13 +43,20 @@
       .btn-primary {
         margin-bottom: 10px;
       }
+
+      nav#next_prev_buttons {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        padding: 5px;
+      }
     </style>
   </head>
 
   <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-dark bg-dark">
       <div class="form-inline mx-auto">
-        <a class="navbar-brand" href="#">Manga search</a>
         <input
           class="form-control mr-sm-2"
           type="search"
@@ -57,23 +64,14 @@
           placeholder="Search"
           aria-label="Search"
         />
-        <a
-          id="back-button"
-          hidden="true"
-          class="pagination page-item page-link"
-          href="#"
-          aria-label="Previous"
-        >
-          <span aria-hidden="true">&laquo;</span>
-        </a>
+
         <button
           class="btn btn-outline-success my-2 my-sm-0"
           id="search-button"
           type="submit"
         >
-          Search
+          &#10174;
         </button>
-        <button class="btn btn-outline-info" onclick="alert(help)">Help</button>
         <button class="btn btn-outline-info" id="lk-button">LK</button>
       </div>
     </nav>
@@ -81,10 +79,22 @@
     <div class="container">
       <div class="jumbotron center">
         <div id="search-result">
-          <h1>Search russian manga without ads and slow performance</h1>
+          <h1 style="word-wrap: break-word">Поиск русской манги</h1>
+          <h3><a href="https://remanga.org">ReManga</a></h3>
         </div>
       </div>
     </div>
+
+    <nav id="next_prev_buttons" hidden="true">
+      <ul class="pagination">
+        <li class="page-item" id="back-button">
+          <a class="page-link">&#10096;</a>
+        </li>
+        <li class="page-item" id="next-button">
+          <a class="page-link">&#10097;</a>
+        </li>
+      </ul>
+    </nav>
 
     <div hidden="true" id="manga-id"></div>
 
@@ -92,4 +102,3 @@
     <script src="js/index.js"></script>
   </body>
 </html>
-
