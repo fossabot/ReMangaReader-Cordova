@@ -1,5 +1,7 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 https = null;
+var database = window.localStorage;
+var currentManga = null;
 
 function onDeviceReady() {
   // Cordova is now initialized. Have fun!
@@ -49,7 +51,6 @@ function search(text) {
     {},
     {},
     (resp) => {
-      console.log(JSON.parse(resp.data).content);
       wait_data = JSON.parse(resp.data).content;
       add("manga", wait_data);
     },
@@ -112,14 +113,23 @@ function add(type, ins) {
 
       document.getElementById("next_prev_buttons").hidden = true;
     } else if (type == "tome") {
+      if (database.getItem("readedManga") !== null) {
+        var data = JSON.parse(database.getItem("readedManga")).readedManga;
+      }
       document.getElementById("next_prev_buttons").hidden = true;
       child.value = "Глава " + ins[i].chapter + " " + ins[i].name;
+      if (database.getItem("readedManga") !== null) {
+        if (data.includes(ins[i].id.toString())) {
+          child.value += " ✓";
+        }
+      }
       child.className = "btn btn-primary";
       child.dataset.id = ins[i].id;
       if (ins[i].paid == true) {
         continue;
       }
       child.addEventListener("click", () => {
+        currentManga = event.target.dataset.id;
         get_chapters(event.target.dataset.id);
       });
     } else if (type == "chapters") {
@@ -160,6 +170,21 @@ function next_prev_page(type, ins) {
       img.src = ins[page + 1].link;
       img.dataset.page = page + 1;
     } catch (e) {
+      if (database.getItem("readedManga") == null) {
+        database.setItem(
+          "readedManga",
+          JSON.stringify({ readedManga: [currentManga] })
+        );
+      } else {
+        var data = JSON.parse(database.getItem("readedManga")).readedManga;
+        if (!data.includes(currentManga)) {
+          data.push(currentManga);
+          database.setItem(
+            "readedManga",
+            JSON.stringify({ readedManga: data })
+          );
+        }
+      }
       get_tomes(manga_id);
     }
   } else if (type == "prev") {
